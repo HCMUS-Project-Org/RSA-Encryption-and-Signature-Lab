@@ -6,6 +6,6 @@ Bài lab này được trích từ SEEDLab (https://seedsecuritylabs.org/Labs_20
 
 <embed src="./Crypto_RSA.pdf" type="application/pdf">
 
-## Đề: 
+## Task: 
 ![Crypto_RSA.pdf](./Crypto_RSA.pdf)
 
