@@ -5,3 +5,7 @@ Xem kĩ hướng dẫn cách setup môi trường VM: https://seedsecuritylabs.o
 Bài lab này được trích từ SEEDLab (https://seedsecuritylabs.org/Labs_20.04/Crypto/Crypto_RSA/).  
 
 <embed src="./Crypto_RSA.pdf" type="application/pdf">
+
+## Task: 
+![Crypto_RSA.pdf](./Crypto_RSA.pdf)
+
