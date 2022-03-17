@@ -3,24 +3,25 @@
 #include <string.h>
 #include <openssl/bn.h>
 
-void textFromHexString(char *hex, char *result)
+char *string2hexString(char *input, int len)
 {
-	char text[20] = {0};
-	int tc = 0;
+	char *output = malloc(len * 2 + 1);
+	int loop;
+	int i;
 
-	for (int k = 0; k < strlen(hex); k++)
+	i = 0;
+	loop = 0;
+
+	while (input[loop] != '\0')
 	{
-		if (k % 2 != 0)
-		{
-			char temp[3];
-			sprintf(temp, "%c%c", hex[k - 1], hex[k]);
-			int number = (int)strtol(temp, NULL, 16);
-			text[tc] = (char)number;
-
-			tc++;
-		}
+		sprintf((char *)(output + i), "%02X", input[loop]);
+		loop += 1;
+		i += 2;
 	}
-	strcpy(result, text);
+	//insert NULL at the end of the output string
+	output[i++] = '\0';
+
+	return output;
 }
 
 void printBN(char *msg, BIGNUM *a)
@@ -36,21 +37,21 @@ void printBN(char *msg, BIGNUM *a)
 int Task5_VerifySignature(BIGNUM *n, BIGNUM *e, BIGNUM *S, char *M)
 {
 	BN_CTX *ctx = BN_CTX_new();
-	BIGNUM *h = BN_new();
 
-	// h = S^e mod n
-	BN_mod_exp(h, S, e, n, ctx);
+	// h2 is h'
+	BIGNUM *h2 = BN_new();
 
-	char *h_hexstr = BN_bn2hex(h);
-	char result[1000];
-	textFromHexString(h_hexstr, result);
+	// h' = S^e mod n
+	BN_mod_exp(h2, S, e, n, ctx);
 
-	printf("H' value:\n");
-	printf("> Hex format: %s\n", h_hexstr);
-	printf("> ASCII format: %s\n", result);
-	printf("> Alice's message: %s\n", M);
+	// calc h = string2hex(M)
+	char *h1 = string2hexString(M, strlen(M));
 
-	return strcmp(M, result);
+	printf("> H value : %s\n", h1);
+	printBN("> H' value:", h2);
+
+	// return compare of h and h'
+	return strcmp(h1, BN_bn2hex(h2));
 }
 
 int main()

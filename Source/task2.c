@@ -42,6 +42,7 @@ BIGNUM *Task2_Encrypt(BIGNUM *n, BIGNUM *e, char *msg)
 	BIGNUM *m = BN_new();
 	BIGNUM *c = BN_new();
 
+	// convert message from ASCII string format to Hex string format
 	char *hex_msg = string2hexString(msg, strlen(msg));
 	BN_hex2bn(&m, hex_msg);
 
@@ -63,6 +64,7 @@ int main()
 	char msg[] = "A top secret!";
 	printf("> Message: %s\n", msg);
 
+	// calc c
 	c = Task2_Encrypt(n, e, msg);
 	printBN("> Encrypted msg:", c);
 

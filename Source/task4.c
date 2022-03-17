@@ -42,6 +42,7 @@ BIGNUM *Task4_RSAsign(BIGNUM *n, BIGNUM *d, char *msg)
 	BIGNUM *m = BN_new();
 	BIGNUM *s = BN_new();
 
+	// convert msg from string to Hex string
 	char *hex_msg = string2hexString(msg, strlen(msg));
 	BN_hex2bn(&m, hex_msg);
 
